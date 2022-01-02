@@ -3,7 +3,7 @@ import SearchBar from './SearchBar'
 import youtube from '../apis/youtube'
 
 class App extends Component {
-    state = {}
+    state = { videos: [] }
 
     onTermSubmit = async term => {
         const respone = await youtube.get('/search',{
@@ -11,12 +11,15 @@ class App extends Component {
                 q: term
             }
         })
+
+        this.setState({ videos: respone.data.items })
     }
 
     render() {
         return (
             <div className="ui container">
                 <SearchBar onFormSubmit={this.onTermSubmit} />
+                I have {this.state.videos.length} videos
             </div>
         )
     }
